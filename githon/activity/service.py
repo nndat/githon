@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
+from allauth.socialaccount.models import SocialApp
+
 from datetime import datetime, timedelta
 from datetime import date
 
@@ -13,9 +15,36 @@ from .models import Activity
 User = get_user_model()
 
 
+def update_token_for(user: User, user_token=None):
+    if not user_token:
+        user_token = user.socialaccount_set.first().socialtoken_set.first()
+
+    refresh_token = user_token.token_secret
+    strava_info = SocialApp.objects.filter(provider='strava').first()
+    params = {
+        'client_id': strava_info.client_id,
+        'client_secret': strava_info.secret,
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token
+    }
+    endpoint = 'https://www.strava.com/oauth/token'
+    response = requests.post(endpoint, data=params).json()
+    if 'access_token' not in response:
+        return None
+
+    user_token.token = response['access_token']
+    user_token.token_secret = response['refresh_token']
+    user_token.expires_at = datetime.fromtimestamp(response['expires_at']) # TODO: Fix timezone warning
+    user_token.save()
+    return user_token
+
+
 def _get_access_token(user):
     try:
-        return user.socialaccount_set.first().socialtoken_set.first().token
+        token_info = user.socialaccount_set.first().socialtoken_set.first()
+        if token_info.expires_at < timezone.now():
+            token_info = update_token_for(user, user_token=token_info)
+        return token_info.token
     except AttributeError:
         pass
 
@@ -46,7 +75,8 @@ def get_activities_for(user: User, start_date: date = None, end_date: date = Non
 
     end_point = "https://www.strava.com/api/v3/athlete/activities"
     headers = {"Authorization": f"Bearer {access_token}"}
-    res = requests.get(end_point, headers=headers)
+    params = {'page': page}
+    res = requests.get(end_point, headers=headers, params=params)
     activities = []
 
     for activity in res.json():
