@@ -178,12 +178,38 @@ def get_timeseries(start_date: date, end_date: date) -> list:
     return dates
 
 
-def get_reward(actitities: list) -> int:
-    return 0
+def get_reward(distances: list) -> int:
+    total_days = len(distances)
+    day = 0
+    reward = 0
+    fee = get_fee()
+    reward_per_km = fee['reward_per_km']
+    lose_per_km = fee['lose_per_km']
+    target_distance = fee['target_distance']
+
+    while day < total_days:
+        next_day = day + 1
+        if next_day < total_days:
+            max_distance = max(distances[day], distances[next_day])
+        else:
+            max_distance = distances[day]
+
+        if max_distance >= target_distance:
+            reward += max_distance * reward_per_km
+        else:
+            reward -= (target_distance - max_distance) * lose_per_km
+        day += 2
+    return reward
 
 
 def get_distance_per_day(activities: list, timeseries: list) -> list:
-    return [5 for _ in timeseries]
+    # get max distance on each day
+    activities_date = {}
+    for activity in activities:
+        date = activity['start_date']
+        activities_date[date] = int(max(activities_date.get(date, 0), activity['distance']) / 1000)  # convert to km
+
+    return [activities_date.get(date, 0) for date in timeseries]
 
 
 @receiver(post_save, sender=SocialToken)

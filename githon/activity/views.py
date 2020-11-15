@@ -16,14 +16,6 @@ from . import service
 # Create your views here.
 
 
-def get_timeseries(start_date: datetime, end_date: datetime) -> list:
-    pass
-
-
-def get_reward(activities: list, start_date: datetime, end_date: datetime):
-    pass
-
-
 def _get_date_range(request):
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
@@ -52,15 +44,18 @@ def get_activities(request, *args, **kwargs):
 
     infos = []
     for user, acts in user_activities.items():
+        distance_per_day = service.get_distance_per_day(acts, timeseries)
+        reward = service.get_reward(distance_per_day)
         user_infos = {
             'username': user,
-            'reward': service.get_reward(acts),
-            'distance_per_day': service.get_distance_per_day(acts, timeseries)
+            'distance_per_day': distance_per_day,
+            'reward': reward
         }
         infos.append(user_infos)
     context = {
         'timeseries': timeseries,
         'user_activities': infos,
+        'fee': service.get_fee(),
     }
 
     return render(request, template_name='activities.html', context=context)

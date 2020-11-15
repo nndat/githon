@@ -1,5 +1,6 @@
 {% extends "base.html" %}
- {% block content %}
+{% block content %}
+{% load humanize %}
 <div id="content">
     <div id="search-form" class="mt-5 mb-5 mx-auto" style="width: 500px">
         <form action="" method="GET" class="form-inline">
@@ -26,9 +27,9 @@
                 {% for user in user_activities %}
                 <tr>
                     <td>{{ user.username }}</td>
-                    <td>{{ user.reward }}</td>
+                    <td>{{ user.reward | intcomma }}</td>
                     {% for distance in user.distance_per_day %}
-                        <td>{{ distance }}</td>
+                        <td>{{ distance | intcomma }}</td>
                     {% endfor %}
                 </tr>
                 {% endfor %}

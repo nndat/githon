@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.strava',
     'activity',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
