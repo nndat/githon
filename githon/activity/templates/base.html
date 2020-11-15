@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Githon Club</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+        <style>
+            body {
+                background-image: url("background.jpeg");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid" id="container">
+            <div id="menu-bar">
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <a class="navbar-brand" href="#">Githon</a>
+                </nav> 
+            </div>
+            <div id="content">
+                <div id="search-form" class="mt-5 mb-5 mx-auto" style="width: 500px">
+                    <form action="" method="GET" class="form-inline">
+                        <div class="form-group">
+                            <input class="form-control mr-2" name="start_date" type="date" placeholder="From">
+                            <span class="mr-2 ml-2"> ~ </span>
+                            <input class="form-control mr-2 ml-2" name="end_date" type="date" placeholder="To">
+                            <button class="btn btn-primary" type="submit">GET</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="activities" class="container">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Thanh Vien</th>
+                                <th>Dat</th>
+                                <th>Vu</th>
+                                <th>Tuan</th>
+                                <!-- <th>Linh</th> -->
+                            </tr>
+                            <tr>
+                                <th>Tien Thuong</th>
+                                <th>50,000</th>
+                                <th>50,000</th>
+                                <th>50,000</th>
+                                <!-- <th>50,000</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2020-11-14</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <!-- <td>5</td> -->
+                            </tr>
+                            <tr>
+                                <td>2020-11-13</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <!-- <td>5</td> -->
+                            </tr>
+                            <tr>
+                                <td>2020-11-12</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <td>5</td>
+                                <!-- <td>5</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
