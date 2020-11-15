@@ -60,7 +60,7 @@ def get_activities(request, *args, **kwargs):
         infos.append(user_infos)
     context = {
         'timeseries': timeseries,
-        'user_activities': infos
+        'user_activities': infos,
     }
 
     return render(request, template_name='activities.html', context=context)

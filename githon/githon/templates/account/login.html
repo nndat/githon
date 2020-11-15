@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+<div class="text-center">
+    <div class="form-signin" style="margin-top: 20%;">
+        <h1 class="h3 mb-3 font-weight-normal">Welcome Githoner</h1>
+        {% for provider in socialaccount_providers %}
+            <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}} btn btn-warning btn-lg" 
+                href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">Login With {{provider.name}}</a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
