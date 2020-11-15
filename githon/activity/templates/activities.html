@@ -33,9 +33,17 @@
                 {% for user in user_activities %}
                 <tr>
                     <td>{{ user.username }}</td>
-                    <td>{{ user.reward | intcomma }}</td>
+                    {% if user.reward > 0 %}
+                        <td class="alert alert-info">{{ user.reward | intcomma }}</td>
+                    {% else %}
+                        <td class="alert alert-danger">{{ user.reward | intcomma }}</td>
+                    {% endif %}
                     {% for distance in user.distance_per_day %}
-                        <td>{{ distance | intcomma }}</td>
+                        {% if distance < fee.target_distance %}
+                            <td class="alert alert-warning">{{ distance | intcomma }}</td>
+                        {% else %}
+                            <td class="alert alert-success">{{ distance | intcomma }}</td>
+                        {% endif %}
                     {% endfor %}
                 </tr>
                 {% endfor %}
