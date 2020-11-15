@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% endblock %}
+
 {% block content %}
 {% load humanize %}
 <div id="content">
@@ -39,6 +45,5 @@
 </div>
 {% endblock %}
 {% block script %}
-    {% load static %}
     <script type="text/javascript" charset="utf8" src="{% static 'js/script.js' %}"></script>
 {% endblock %}
