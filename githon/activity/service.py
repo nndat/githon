@@ -1,7 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 from allauth.socialaccount.models import SocialApp
+from allauth.socialaccount.models import SocialToken
 
 from datetime import datetime, timedelta
 from datetime import date
@@ -96,7 +99,7 @@ def get_activities_for(user: User, start_date: date = None, end_date: date = Non
             'elapsed_time': activity['elapsed_time'],
             'total_elevation_gain': activity['total_elevation_gain'],
             'activity_type': activity['type'],
-            'start_date': dateparser.parse(activity['start_date']),
+            'start_date': dateparser.parse(activity['start_date']).date(),
             'start_date_local': dateparser.parse(activity['start_date_local']),
             'average_speed': activity['average_speed'],
             'max_speed': activity['max_speed'],
@@ -181,3 +184,11 @@ def get_reward(actitities: list) -> int:
 
 def get_distance_per_day(activities: list, timeseries: list) -> list:
     return [5 for _ in timeseries]
+
+
+@receiver(post_save, sender=SocialToken)
+def update_activities_for_new_user(sender, instance, **kwargs):
+    # update activities for last 30 days
+    user = instance.account.user
+    start_date = timezone.now().date() - timedelta(days=30)
+    update_activities_for(user, start_date=start_date)
