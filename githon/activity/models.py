@@ -7,7 +7,7 @@ User = get_user_model()
 # Create your models here.
 class Activity(models.Model):
     name = models.CharField(max_length=30, blank=True)
-    start_date = models.DateTimeField()
+    start_date = models.DateField()
     start_date_local = models.DateTimeField()
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     distance = models.FloatField()

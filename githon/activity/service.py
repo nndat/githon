@@ -15,6 +15,12 @@ from .models import Activity
 User = get_user_model()
 
 
+def update_token() -> None:
+    users = User.objects.all()
+    for user in users:
+        update_token_for(user)
+
+
 def update_token_for(user: User, user_token=None):
     if not user_token:
         user_token = user.socialaccount_set.first().socialtoken_set.first()
@@ -161,3 +167,17 @@ def test_get_reward():
     end_date = timezone.now()
     reward = get_reward(activities, start_date, end_date)
     print(reward)
+
+
+def get_timeseries(start_date: date, end_date: date) -> list:
+    days = (end_date - start_date).days + 1
+    dates = [start_date + timedelta(days=day) for day in range(days)]
+    return dates
+
+
+def get_reward(actitities: list) -> int:
+    return 0
+
+
+def get_distance_per_day(activities: list, timeseries: list) -> list:
+    return [5 for _ in timeseries]
