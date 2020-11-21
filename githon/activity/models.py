@@ -22,4 +22,21 @@ class Activity(models.Model):
 
     class Meta:
         db_table = 'activity'
-        # odering = ['start_date']
+
+
+class RewardHistory(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    reward_amount = models.IntegerField()
+
+    class Meta:
+        db_table = 'reward_history'
+
+
+class GithonFee(models.Model):
+    reward_per_km = models.PositiveIntegerField()
+    lose_per_km = models.PositiveIntegerField()
+
+    class Meta:
+        db_table = 'githon_fee'
