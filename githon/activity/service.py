@@ -118,44 +118,6 @@ def get_activities_for(user: User, start_date: date = None, end_date: date = Non
     return activities
 
 
-# def activities_timeline(activities: list, start_date: datetime, end_date: datetime) -> dict:
-#     days = (end_date - start_date).days + 1
-#     date_ranges  = [start_date + timedelta(days=day) for day in range(days)]
-#     timelines = {date: 0 for date in date_ranges}
-#     for activity in activities:
-#         start_date = activity['start_date'].date()
-#         timelines[start_date] = max(activity['distance'], timelines.get(start_date, 0))
-#     return timelines
-
-
-# def get_reward(activities: list, start_date: datetime, end_date: datetime) -> int:
-#     # get max distance on each date
-#     fee = get_fee()
-#     reward_per_km = fee['reward_per_km']
-#     lose_per_km = fee['lose_per_km']
-#     target_distance = fee['target_distance']
-
-#     timelines = activities_timeline(activities, start_date, end_date)  
-#     reward = 0
-
-#     dates = sorted(activities.keys())
-
-#     for index, date in enumerate(dates[::2]):
-#         try:
-#             day1, day2 = 
-#             max_distance = max(distances[day1], distances[day2])
-#         except IndexError:
-#             date = date_ranges[day]
-#             max_distance = distances[date]
-        
-#         if max_distance < target_distance:
-#             reward -= (target_distance - max_distance) * lose_per_km
-#         else:
-#             reward += max_distance * reward_per_km
-
-#     return reward
-
-
 def get_fee() -> dict:
     return {
         'reward_per_km': 5000,
