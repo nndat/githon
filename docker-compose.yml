@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:8.0.18
+    container_name: githon_db
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "33306:3306"
+    environment:
+      - MYSQL_DATABASE=githon_db
+      - MYSQL_USER=githon
+      - MYSQL_ROOT_PASSWORD=Passw0rd
+      - MYSQL_PASSWORD=Passw0rd
+    volumes:
+      - githon_db_data:/var/lib/mysql
+    networks:
+      - githon_network
+
+  web:
+    build: .
+    container_name: githon_webapp
+    ports:
+      - "8008:8000"
+    environment: 
+      - DJANGO_DEBUG=false
+      - DJANGO_SECRET_KEY=v_cbb5a7_nt^k@yc5z5(@+fadn@d_2z!lx*1p)v*j+36wfp34m
+      - DJANGO_ALLOWED_HOSTS=*
+      - CORS_ORIGIN_WHITELIST=http://worklog.gisoft.vn,https://worklog.gisoft.vn
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=gisoft@123
+      - APP_PORT=8000
+      - DB_ENGINE=django.db.backends.mysql
+      - DB_NAME=githon_db
+      - DB_USER=githon
+      - DB_PASSWORD=Passw0rd
+      - DB_HOST=db
+      - DB_PORT=3306
+    depends_on:
+      - db
+    volumes:
+      - githon_web_static:/opt/app/static
+    networks:
+      - githon_network
+
+networks:
+  githon_network:
+
+volumes:
+  githon_db_data:
+  githon_web_static:

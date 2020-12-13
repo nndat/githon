@@ -29,6 +29,17 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+def get_config(key, default_val=None):
+    """get enviroment variable"""
+    if not key:
+        raise Exception("config key can not be null")
+    else:
+        val = os.getenv(key)
+    if not val:
+        return default_val
+    return val
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -84,10 +95,23 @@ WSGI_APPLICATION = 'githon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': get_config('DB_ENGINE', 'django.db.backends.mysql'),
+        'NAME': get_config('DB_NAME', 'githon_db'),
+        'USER': get_config('DB_USER', 'githon'),
+        'PASSWORD': get_config('DB_PASSWORD', 'Passw0rd'),
+        'HOST': get_config('DB_HOST', 'localhost'),
+        'PORT': get_config('DB_PORT', '3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4'
+        }
     }
 }
 
@@ -133,5 +157,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'githon/static')
 STATIC_URL = '/static/'
 SITE_ID = 1
