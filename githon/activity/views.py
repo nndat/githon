@@ -6,6 +6,7 @@ from datetime import datetime
 from datetime import timedelta
 
 import dateparser
+import csv
 
 from collections import defaultdict
 
@@ -26,20 +27,25 @@ def _get_date_range(request):
     return start_date, end_date
 
 
-@login_required
-def get_activities(request, *args, **kwargs):
-    start_date, end_date = _get_date_range(request)
-
+def _get_user_activities(start_date, end_date) -> dict:
+    # query activitity from db
     activities = Activity.objects.filter(start_date__gte=start_date, start_date__lte=end_date) \
                                  .select_related('user__username') \
                                  .values('user__username', 'start_date', 'distance') \
                                  .order_by('-start_date')
 
+    # group activities for each user
     user_activities = defaultdict(list)
     for activity in activities:
         username = activity['user__username']
         user_activities[username].append(activity)
+    return user_activities
 
+
+@login_required
+def get_activities(request, *args, **kwargs):
+    start_date, end_date = _get_date_range(request)
+    user_activities = _get_user_activities(start_date, end_date)
     timeseries = service.get_timeseries(start_date, end_date)
 
     infos = []
@@ -59,3 +65,8 @@ def get_activities(request, *args, **kwargs):
     }
 
     return render(request, template_name='activities.html', context=context)
+
+
+@login_required
+def export_csv(request, *args, **kwargs):
+    pass

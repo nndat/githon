@@ -37,6 +37,7 @@ class RewardHistory(models.Model):
 class GithonFee(models.Model):
     reward_per_km = models.PositiveIntegerField()
     lose_per_km = models.PositiveIntegerField()
+    target_distance = models.PositiveIntegerField(default=5)
 
     class Meta:
         db_table = 'githon_fee'
