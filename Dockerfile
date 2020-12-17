@@ -38,7 +38,7 @@ WORKDIR /opt/app
 
 COPY . .
 
-VOLUME ["/opt/app/static"]
+VOLUME ["/opt/app/githon/static"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["gunicorn", "githon.wsgi:application"]

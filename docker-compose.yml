@@ -40,7 +40,7 @@ services:
     depends_on:
       - db
     volumes:
-      - githon_web_static:/opt/app/static
+      - githon_web_static:/opt/app/githon/static
     networks:
       - githon_network
 
