@@ -27,9 +27,8 @@ services:
       - DJANGO_DEBUG=false
       - DJANGO_SECRET_KEY=v_cbb5a7_nt^k@yc5z5(@+fadn@d_2z!lx*1p)v*j+36wfp34m
       - DJANGO_ALLOWED_HOSTS=*
-      - CORS_ORIGIN_WHITELIST=http://worklog.gisoft.vn,https://worklog.gisoft.vn
-      - ADMIN_USERNAME=admin
-      - ADMIN_PASSWORD=gisoft@123
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=gisoft@123
       - APP_PORT=8000
       - DB_ENGINE=django.db.backends.mysql
       - DB_NAME=githon_db
