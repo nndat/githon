@@ -6,6 +6,7 @@ User = get_user_model()
 
 # Create your models here.
 class Activity(models.Model):
+    id = models.BigIntegerField(primary_key=True)
     name = models.CharField(max_length=30, blank=True)
     start_date = models.DateField()
     start_date_local = models.DateTimeField()
