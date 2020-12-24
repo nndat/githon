@@ -23,13 +23,6 @@ RUN apk update \
         libffi-dev \
     && apk add --no-cache mariadb-dev \
         freetype-dev \
-        libpng-dev \
-        libjpeg-turbo-dev \
-        cairo-dev \
-        pango-dev \
-        gdk-pixbuf \
-        cairo \
-        cairo-tools \
         mysql-client \
     && pip install --no-cache-dir -r requirements.txt \
     && apk del build-deps

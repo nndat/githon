@@ -24,11 +24,12 @@ services:
     ports:
       - "8008:8000"
     environment: 
-      - DJANGO_DEBUG=false
+      - DJANGO_DEBUG=0
       - DJANGO_SECRET_KEY=v_cbb5a7_nt^k@yc5z5(@+fadn@d_2z!lx*1p)v*j+36wfp34m
-      - DJANGO_ALLOWED_HOSTS=*
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=gisoft@123
+      - DJANGO_SUPERUSER_EMAIL=admin@githon.vn
       - APP_PORT=8000
       - DB_ENGINE=django.db.backends.mysql
       - DB_NAME=githon_db
