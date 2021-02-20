@@ -23,7 +23,9 @@ RUN apk update \
         libffi-dev \
     && apk add --no-cache mariadb-dev \
         freetype-dev \
-        mysql-client \
+        mysql-client
+
+RUN python -m pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt \
     && apk del build-deps
 
@@ -34,6 +36,7 @@ COPY . .
 VOLUME ["/opt/app/githon/static"]
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["gunicorn", "githon.wsgi:application"]
 
 EXPOSE 8000
+
+CMD ["gunicorn", "githon.wsgi:application"]

@@ -22,7 +22,7 @@ services:
     build: .
     container_name: githon_webapp
     ports:
-      - "8008:8000"
+      - "80:8000"
     environment: 
       - DJANGO_DEBUG=0
       - DJANGO_SECRET_KEY=v_cbb5a7_nt^k@yc5z5(@+fadn@d_2z!lx*1p)v*j+36wfp34m
